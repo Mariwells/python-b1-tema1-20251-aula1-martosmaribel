@@ -62,12 +62,25 @@ Exemple:
 '''
 
 
-import numpy as np
+try:
+    import numpy as np
+except Exception:
+    np = None
+    import statistics as _statistics
 
 def results(list_numbers):
-    # Write here your code
-    pass
+    if np is not None:
+        average = float(np.mean(list_numbers))
+        std_dev = float(np.std(list_numbers))
+    else:
+        average = float(_statistics.mean(list_numbers))
+        std_dev = float(_statistics.pstdev(list_numbers))
+
+    print(f"Average: {average:.2f}")
+    print(f"Standard deviation: {std_dev:.2f}")
+
+    return round(average, 2), round(std_dev, 2)
 
 # Si quieres probar tu código, descomenta las siguientes líneas y ejecuta el script 
 # Si vols provar el teu codi, descomenta les línies següents i executa l'script
-# results([1, 2, 10, -5, 0, 9.55, 74.825, 55, 8, 42])
+results([1, 2, 10, -5, 0, 9.55, 74.825, 55, 8, 42])
